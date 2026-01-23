@@ -1,5 +1,9 @@
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
+import AppLayout from "./components/layout/AppLayout"; // Isse import zaroor karein
+
+// Dashboard Content ke liye abhi dummy component
+const DashboardContent = () => <div className="p-10 text-2xl font-bold">Dashboard Content (Asli Wala)</div>;
 
 const appRouter = createBrowserRouter([
     {
@@ -7,12 +11,24 @@ const appRouter = createBrowserRouter([
         element: <LoginPage />,
     },
     {
+        // Ek hi baar "/" define karein as a Parent
         path: "/",
-        element: <Navigate to="/login" />, // Default login par bhejo
+        element: <AppLayout />, 
+        children: [
+            {
+                index: true, 
+                element: <Navigate to="/dashboard" replace /> 
+            },
+            {
+                path: "dashboard", 
+                element: <DashboardContent /> 
+            }
+        ],
     },
+    // Agar koi galat URL daale toh login par bhej do
     {
-        path: "/dashboard",
-        element: <div className="p-10 text-2xl">Dashboard (Coming Soon...)</div>,
+        path: "*",
+        element: <Navigate to="/login" />
     }
 ]);
 

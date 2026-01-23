@@ -1,21 +1,33 @@
 @import "tailwindcss";
 
-/* 1. Font Import */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@theme {
+  /* Metronic Specific Colors */
+  --color-brand: #1b84ff;
+  --color-brand-light: #f1faff;
+  --color-gray-label: #78829d;
+  --color-dark-text: #252f4a;
+  --color-bg-app: #f9f9f9;
+  --color-border-subtle: #f1f1f2;
 
-/* 2. Standard CSS Reset (Har browser aur version ke liye) */
+  /* Typography Scale */
+  --font-inter: "Inter", sans-serif;
+}
+
 :root {
-  font-family: 'Poppins', sans-serif;
-}
-
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
+  background-color: var(--color-bg-app);
+  color: var(--color-dark-text);
+  font-family: var(--font-inter);
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.015em; /* Metronic style tight lettering */
 }
 
-/* Forcefully apply to inputs and buttons (Jo default font nahi lete) */
-button, input, optgroup, select, textarea {
-  font-family: 'Poppins', sans-serif !important;
+/* Metronic global text rules */
+h1, h2, h3 { color: var(--color-dark-text); font-weight: 700; }
+p { color: var(--color-gray-label); font-size: 14px; }
+
+/* Custom Scrollbar for a clean look */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-thumb {
+  background: #dbdfe9;
+  border-radius: 10px;
 }
