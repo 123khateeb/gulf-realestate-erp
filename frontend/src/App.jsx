@@ -1,9 +1,41 @@
+import { useState } from "react";
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import AppLayout from "./components/layout/AppLayout"; // Isse import zaroor karein
+import PageHeader from "./components/common/PageHeader";
+import StatsGrid from "./components/dashboard/StatsGrid";
+import StatusBadge from "./components/common/StatusBadge";
+import TransactionTable from "./components/dashboard/TransactionTable";
 
 // Dashboard Content ke liye abhi dummy component
-const DashboardContent = () => <div className="p-10 text-2xl font-bold">Dashboard Content (Asli Wala)</div>;
+const DashboardContent = () => {
+
+    // Case 1: Action function (Jo humne alert ke liye banaya tha)
+  const handleRefreshData = () => {
+    alert("Data refresh ho raha hai...");
+  };
+
+  
+    return(
+        <div className="space-y-6">
+      {/* ✅ Use Case 1: URL Navigation (Jab user ko naye page par bhejna ho) */}
+      {/* Isme 'to' prop pass kiya hai, isliye ye 'Link' ban jayega */}
+      <PageHeader 
+        label="Properties Overview" 
+        description="Manage and track all your real estate assets." 
+        buttonLabel="Add New Property" 
+        to="/properties/add"
+        variant = "blue" 
+      />
+      <StatsGrid/>
+
+      <TransactionTable/>
+      <StatusBadge status= {"Paid"}/>
+      <StatusBadge status= {"pending"}/>
+      <StatusBadge status= {"Overdue"}/>
+    </div>
+    )
+};
 
 const appRouter = createBrowserRouter([
     {

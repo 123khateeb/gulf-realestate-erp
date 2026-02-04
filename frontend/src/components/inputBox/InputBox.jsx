@@ -1,4 +1,4 @@
-import PropTypes from "prop-types";  
+import PropTypes from "prop-types";  
 
 const InputBox = ({
   label,
@@ -13,23 +13,30 @@ const InputBox = ({
   id,
   ...props
 }) => {
-  // ✅ Metronic Classes: Soft background, subtle border, aur focus par blue shadow
   const inputBaseClass = `
-    w-full px-4 py-3 text-[13px] font-medium transition-all duration-200 
-    bg-[#f9f9f9] border border-[#f1f1f2] rounded-lg
-    text-[#252f4a] placeholder:text-[#78829d]
-    focus:bg-white focus:border-[#1b84ff] focus:ring-0 outline-none
-    disabled:bg-[#f1f1f2] disabled:cursor-not-allowed
+    w-full px-4 py-3 transition-all duration-200 rounded-lg outline-none
+    text-[var(--font-size-13px)] font-[var(--font-weight-500)]
+    
+    /* Background & Border colors */
+    bg-[var(--color-bg-input)] border border-[var(--color-border-subtle)]
+    text-[var(--color-text-header)] placeholder:text-[var(--color-text-muted)]
+    
+    /* ✅ Metronic Style Interaction */
+    hover:border-[var(--color-primary)] 
+    focus:bg-[var(--color-bg-card)] focus:border-[var(--color-primary)] 
+    focus:ring-4 focus:ring-[var(--color-primary)]/5
+    
+    disabled:bg-[var(--color-border-subtle)] disabled:opacity-50 disabled:cursor-not-allowed
   `;
 
-  const errorClass = error ? "border-red-500 focus:border-red-500" : "";
+  const errorBorder = error ? "border-[var(--color-danger)] focus:border-[var(--color-danger)] focus:ring-[var(--color-danger)]/5" : "";
 
   return (
     <div className={`flex flex-col w-full mb-5 ${className}`}>
       {label && (
         <label
           htmlFor={id}
-          className="text-[13px] font-semibold text-[#252f4a] mb-2 px-1"
+          className="text-[var(--font-size-13px)] font-[var(--font-weight-600)] text-[var(--color-text-header)] mb-2 px-1"
         >
           {label}
         </label>
@@ -43,13 +50,12 @@ const InputBox = ({
         placeholder={placeholder}
         disabled={disabled}
         readOnly={readonly}
-        className={`${inputBaseClass} ${errorClass}`}
-        aria-invalid={!!error}
+        className={`${inputBaseClass} ${errorBorder}`}
         {...props}
       />
       
       {error && (
-        <p className="text-[#f8285a] text-[11px] font-medium mt-1.5 px-1">
+        <p className="text-[var(--color-danger)] text-[var(--font-size-11px)] font-[var(--font-weight-500)] mt-1.5 px-1">
           {error}
         </p>
       )}
@@ -60,7 +66,7 @@ const InputBox = ({
 InputBox.propTypes = {
   label: PropTypes.string,
   type: PropTypes.string,
-  value: PropTypes.any,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
   disabled: PropTypes.bool,

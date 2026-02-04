@@ -7,11 +7,10 @@ const SideBarDropdown = ({ label, iconName, iconSize, children, isCollapsed }) =
     const [open, setOpen] = useState(false);
     const location = useLocation();
 
-    
+    // Auto-expand logic based on active child path
     useEffect(() => {
-        // Safe check: ?. use karne se 'undefined' ka error nahi aayega
         const hasActiveChild = React.Children.toArray(children).some(
-            (child) => child.props?.children?.props?.to === location.pathname
+            (child) => child.props?.path === location.pathname
         );
         
         if (hasActiveChild) {
@@ -19,7 +18,6 @@ const SideBarDropdown = ({ label, iconName, iconSize, children, isCollapsed }) =
         }
     }, [location.pathname, children]);
 
-    
     const handleToggle = () => {
         if (!isCollapsed) {
             setOpen(!open);
@@ -28,7 +26,7 @@ const SideBarDropdown = ({ label, iconName, iconSize, children, isCollapsed }) =
 
     return (
         <div className="flex flex-col w-full">
-            
+            {/* Main Toggle Button */}
             <SidebarButtonsOne 
                 buttonName={label} 
                 iconName={iconName} 
@@ -39,9 +37,13 @@ const SideBarDropdown = ({ label, iconName, iconSize, children, isCollapsed }) =
                 isCollapsed={isCollapsed}
             />
             
-            
+            {/* Dropdown Container */}
             {open && !isCollapsed && (
-                <div className="mt-1 ml-6 border-l border-[#f1f1f2] space-y-1 transition-all duration-300 ease-in-out">
+                <div className={`
+                    mt-1 space-y-1 transition-all duration-300 ease-in-out
+                    /* LTR mein left border, RTL mein right border */
+                    ms-9 border-s border-[var(--color-border-subtle)]
+                `}>
                     {children}
                 </div>
             )}
