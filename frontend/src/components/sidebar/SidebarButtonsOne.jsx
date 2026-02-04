@@ -1,15 +1,16 @@
 import * as LucideIcons from "lucide-react";
 import { ChevronDown } from "lucide-react";
-import { Link, useLocation } from "react-router-dom"; 
+import { Link, useLocation, NavLink } from "react-router-dom"; 
 
 const SidebarButtonsOne = ({ iconName, buttonName, iconSize = 18, isOpen, onClick, dropdownIcon, href, isCollapsed }) => {
     const location = useLocation();
     const LucideIcon = LucideIcons[iconName] || LucideIcons.LayoutDashboard;
     
-    // Exact path matching logic
-    const isActive = href && location.pathname === href;
+    // ✅ Pro-Tip: .startsWith() use karne se nested pages (jaise /staff/add) par bhi main menu highlight rahega
+    const isActive = href && (location.pathname === href || location.pathname.startsWith(`${href}/`));
 
-    const Wrapper = href ? Link : "div";
+    // Agar href hai toh Link/NavLink banega, warna div (dropdown ke liye)
+    const Wrapper = href ? NavLink : "div";
     const wrapperProps = href ? { to: href } : { onClick };
 
     return (
@@ -24,7 +25,6 @@ const SidebarButtonsOne = ({ iconName, buttonName, iconSize = 18, isOpen, onClic
             `}
         >
             <div className="flex items-center gap-3">
-                {/* Icon color transition */}
                 <span className={`transition-colors duration-200 ${
                     isActive 
                     ? "text-[var(--color-primary)]" 
@@ -33,18 +33,16 @@ const SidebarButtonsOne = ({ iconName, buttonName, iconSize = 18, isOpen, onClic
                     <LucideIcon size={iconSize} />
                 </span>
                 
-                {/* Text color transition */}
                 {!isCollapsed && (
                     <span className={`
-                        font-[var(--font-weight-600)] text-[var(--font-size-13px)] whitespace-nowrap overflow-hidden
-                        ${isActive ? "text-[var(--color-primary)]" : "text-[var(--color-text-header)]"}
+                        font-[var(--font-weight-600)] whitespace-nowrap overflow-hidden]
+                        ${isActive ? "text-[var(--color-primary)]" : "text-[var(--color-text-header)] group-hover:text-[var(--color-primary)]"}
                     `}>
                         {buttonName}
                     </span>
                 )}
             </div>
 
-            {/* Dropdown Arrow */}
             {dropdownIcon && !isCollapsed && (
                 <span className={`${isOpen ? "text-[var(--color-primary)]" : "text-[var(--color-text-muted)]"}`}>
                     <ChevronDown 

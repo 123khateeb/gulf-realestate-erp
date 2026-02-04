@@ -1,11 +1,18 @@
-import { Search, Bell, Languages, UserCircle, Sun, Moon } from "lucide-react";
+import { Search, Bell, Languages, UserCircle, Sun, Moon, Menu } from "lucide-react";
 
-const Navbar = ({ isRTL, setIsRTL, isDarkMode, setIsDarkMode }) => {
+const Navbar = ({ isRTL, setIsRTL, isDarkMode, setIsDarkMode, toggleSidebar }) => {
   return (
     <nav className="h-[var(--navbar-height,70px)] bg-[var(--color-bg-navbar)] border-b border-[var(--color-border-subtle)] flex items-center justify-between px-6 lg:px-8 transition-colors duration-300">
       
-      {/* 1. Search Section: Variables applied */}
+     
       <div className="flex items-center flex-1">
+        
+        <button 
+          onClick={toggleSidebar}
+          className="p-2.5 lg:hidden hover:bg-[var(--color-primary-light)] rounded-lg text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-all cursor-pointer"
+        >
+          <Menu size={22} />
+        </button>
         <div className="relative w-full max-w-[300px] group">
           <span className="absolute inset-y-0 left-3 flex items-center text-[var(--color-text-muted)] group-focus-within:text-[var(--color-primary)] transition-colors">
             <Search size={18} />
@@ -19,7 +26,7 @@ const Navbar = ({ isRTL, setIsRTL, isDarkMode, setIsDarkMode }) => {
       </div>
 
       {/* 2. Right Side Actions */}
-      <div className="flex items-center gap-2 md:gap-3">
+      <div className="flex items-center gap-1 md:gap-3">
         
         {/* Dark Mode Toggle */}
         <button 

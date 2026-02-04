@@ -6,6 +6,7 @@ import PageHeader from "./components/common/PageHeader";
 import StatsGrid from "./components/dashboard/StatsGrid";
 import StatusBadge from "./components/common/StatusBadge";
 import TransactionTable from "./components/dashboard/TransactionTable";
+import StaffList from "./pages/StaffList";
 
 // Dashboard Content ke liye abhi dummy component
 const DashboardContent = () => {
@@ -54,6 +55,10 @@ const appRouter = createBrowserRouter([
             {
                 path: "dashboard", 
                 element: <DashboardContent /> 
+            },
+            {
+                path:"staff/list",
+                element:<StaffList/>
             }
         ],
     },
